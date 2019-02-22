@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>聊天室</title>
+    <link rel="shortcut icon" th:href="@{/static/favicon.ico}">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://cdn.bootcss.com/toastr.js/2.1.4//toastr.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/toastr.js/2.1.4//toastr.min.js"></script>
+    <script
+            src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+</head>
+<body class="jumbotron">
+<div id="head" class="col-md-12 page-header">
+    <h3 >欢迎使用！<span th:text="${name}"></span></h3>
+    <h3>
+        <small id="status"> status:连接中……</small>
+    </h3>
+    <a class="btn btn-danger" id="logout">退出</a>
+</div>
+<div class="col-md-3 ">
+
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion"
+                   href="#collapseOne"> 在线成员  </a>
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in">
+            <ul class="nav nav-stacked">
+                <li class="panel-info"><a href="#">好友一</a></li>
+                <li><a>好友一</a></li>
+                <li><a> 好友一</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion"
+                   href="#collapseOne1"> 群聊列表 <span id="groupWarn" class="badge">0</span> </a>
+            </h4>
+        </div>
+        <div id="collapseOne1" class="panel-collapse collapse in">
+            <ul id="groupListUL" class="nav nav-stacked ">
+
+            </ul>
+        </div>
+    </div>
+    <div class="panel  panel-warning">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" id="identifier" class="btn"  data-parent="#accordion"
+                   href="#collapseOne2">
+                    <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>新建群聊
+                </a>
+            </h4>
+        </div>
+        <div id="collapseOne2" class="panel-collapse collapse out">
+            <form id="groupChatAddForm">
+                <div class="form-group">
+                    <p>群聊名称</p>
+                    <input type="text"  name="groupName" class="form-control" id="exampleInputEmail1" placeholder="群聊名称">
+                </div>
+                <p>邀请成员：</p>
+                <div class="checkbox" style="text-align: center;">
+                    <ul  id="groupList" class="nav  nav-stacked ">
+
+                    </ul>
+                </div>
+                <a  class="btn btn-success center-block" onclick="addGroup()">确定</a>
+            </form>
+
+        </div>
+    </div>
+</div>
+<div id="singleChatDiv" class="col-md-9" style="display: none;">
+    <div class="panel panel-primary">
+        <table id="conversation" class="table table-striped">
+            <thead>
+            <tr>
+                <th id="chatMe">聊天内容：</th>
+            </tr>
+            </thead>
+            <tbody id="greetings">
+            </tbody>
+        </table>
+    </div>
+    <div class="panel panel-success">
+        <div  id="PChatSend" class="input-group input-group-lg">
+            <input type="text" id="sendMsg" class="form-control " aria-label="...">
+            <div  id="sendDiv" class="input-group-btn">
+                <a class="btn btn-lg btn-info"  onclick="sendMessage()">发送</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="groupChatDiv" style="display: none" class="col-md-9">
+    <div class="panel panel-primary">
+        <table id="conversation" class="table table-striped">
+            <thead>
+            <tr>
+                <th id="groupChatMe">群聊内容：</th>
+            </tr>
+            </thead>
+            <tbody id="groupGreetings">
+            </tbody>
+        </table>
+    </div>
+    <div class="panel panel-success">
+        <div class="input-group input-group-lg">
+            <input type="text" id="sendMsg2" class="form-control " aria-label="...">
+            <div  id="groupSendDiv" class="input-group-btn">
+                <a class="btn btn-lg btn-info" onclick="sendMessage()">发送</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    toastr.options.positionClass = 'toast-top-center';
+</script>
+<script th:inline="javascript">
+    var name=[[${name}]];
+    var basePath = [[${#httpServletRequest.getContextPath()}]];
+</script>
+<script  th:src="@{/static/app.js}"></script>
+</body>
+</html>
